@@ -1,0 +1,16 @@
+{
+  "name": "redshift-sink",
+  "config": {
+    "confluent.topic.bootstrap.servers": "bootstrap_servers",
+    "connector.class": "io.confluent.connect.aws.redshift.RedshiftSinkConnector",
+    "tasks.max": "1",
+    "topics": "orders",
+    "aws.redshift.domain": "cluster-name.cluster-id.region.redshift.amazonaws.com",
+    "aws.redshift.port": "5439",
+    "aws.redshift.database": "dev",
+    "aws.redshift.user": "awsuser",
+    "aws.redshift.password": "your-password",
+    "auto.create": "true",
+    "pk.mode": "kafka"
+  }
+}
