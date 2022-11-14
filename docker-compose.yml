@@ -8,10 +8,10 @@ services:
       - "8081:8081"
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "b-2.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098,b-1.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098,b-3.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098"
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
       SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: SASL_SSL
       SCHEMA_REGISTRY_KAFKASTORE_SASL_MECHANISM: AWS_MSK_IAM
-      SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG: "software.amazon.msk.auth.iam.IAMLoginModule"
+      SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG: 'software.amazon.msk.auth.iam.IAMLoginModule required username="darsh" password="darsh-secret";'
       SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
       SCHEMA_REGISTRY_SCHEMA_REGISTRY_INTER_INSTANCE_PROTOCOL: "http"
       SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: ERROR
@@ -26,16 +26,16 @@ services:
     ports:
       - "8083:8083"
     environment:
-      CONNECT_BOOTSTRAP_SERVERS: "b-2.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098,b-1.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098,b-3.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098"
+      CONNECT_BOOTSTRAP_SERVERS: "b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
       CONNECT_SECURITY_PROTOCOL: SASL_SSL
       CONNECT_SASL_MECHANISM: AWS_MSK_IAM
-      CONNECT_SASL_JAAS_CONFIG: "software.amazon.msk.auth.iam.IAMLoginModule"
+      CONNECT_SASL_JAAS_CONFIG: 'software.amazon.msk.auth.iam.IAMLoginModule required username="darsh" password="darsh-secret";'
       CONNECT_CONSUMER_SECURITY_PROTOCOL: SASL_SSL
       CONNECT_CONSUMER_SASL_MECHANISM: AWS_MSK_IAM
-      CONNECT_CONSUMER_SASL_JAAS_CONFIG: "software.amazon.msk.auth.iam.IAMLoginModule"
+      CONNECT_CONSUMER_SASL_JAAS_CONFIG: 'software.amazon.msk.auth.iam.IAMLoginModule required username="darsh" password="darsh-secret";'
       CONNECT_PRODUCER_SECURITY_PROTOCOL: SASL_SSL
       CONNECT_PRODUCER_SASL_MECHANISM: AWS_MSK_IAM
-      CONNECT_PRODUCER_SASL_JAAS_CONFIG: "software.amazon.msk.auth.iam.IAMLoginModule"
+      CONNECT_PRODUCER_SASL_JAAS_CONFIG: 'software.amazon.msk.auth.iam.IAMLoginModule required username="darsh" password="darsh-secret";'
 
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
       CONNECT_REST_PORT: 8083
@@ -64,7 +64,7 @@ services:
       - "8088:8088"
     environment:
       KSQL_CONFIG_DIR: "/etc/ksql"
-      KSQL_BOOTSTRAP_SERVERS: "b-2.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098,b-1.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098,b-3.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098"
+      KSQL_BOOTSTRAP_SERVERS: "b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
       KSQL_HOST_NAME: ksqldb-server
       KSQL_LISTENERS: "http://0.0.0.0:8088"
       KSQL_CACHE_MAX_BYTES_BUFFERING: 0
@@ -93,7 +93,7 @@ services:
       - schema-registry
       - connect
     command: "bash -c 'echo Waiting for Kafka to be ready... && \
-      cub kafka-ready -b b-2.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098,b-1.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098,b-3.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098 1 40 && \
+      cub kafka-ready -b b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096 1 40 && \
       echo Waiting for Confluent Schema Registry to be ready... && \
       cub sr-ready schema-registry 8081 40 && \
       echo Waiting a few seconds for topic creation to finish... && \
@@ -101,7 +101,7 @@ services:
       tail -f /dev/null'"
     environment:
       KSQL_CONFIG_DIR: "/etc/ksql"
-      STREAMS_BOOTSTRAP_SERVERS: "b-2.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098,b-1.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098,b-3.democluster2.qkyprb.c19.kafka.us-east-1.amazonaws.com:9098"
+      STREAMS_BOOTSTRAP_SERVERS: "b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
       STREAMS_SCHEMA_REGISTRY_HOST: schema-registry
       STREAMS_SCHEMA_REGISTRY_PORT: 8081
 
