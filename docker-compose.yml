@@ -10,8 +10,8 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
       SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: SASL_SSL
-      SCHEMA_REGISTRY_KAFKASTORE_SASL_MECHANISM: AWS_MSK_IAM
-      SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG: 'software.amazon.msk.auth.iam.IAMLoginModule required username="darsh" password="darsh-secret";'
+      SCHEMA_REGISTRY_KAFKASTORE_SASL_MECHANISM: SCRAM-SHA-512
+      SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="darsh" password="darsh-secret";'
       SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
       SCHEMA_REGISTRY_SCHEMA_REGISTRY_INTER_INSTANCE_PROTOCOL: "http"
       SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: ERROR
@@ -28,14 +28,14 @@ services:
     environment:
       CONNECT_BOOTSTRAP_SERVERS: "b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
       CONNECT_SECURITY_PROTOCOL: SASL_SSL
-      CONNECT_SASL_MECHANISM: AWS_MSK_IAM
-      CONNECT_SASL_JAAS_CONFIG: 'software.amazon.msk.auth.iam.IAMLoginModule required username="darsh" password="darsh-secret";'
+      CONNECT_SASL_MECHANISM: SCRAM-SHA-512
+      CONNECT_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="darsh" password="darsh-secret";'
       CONNECT_CONSUMER_SECURITY_PROTOCOL: SASL_SSL
-      CONNECT_CONSUMER_SASL_MECHANISM: AWS_MSK_IAM
-      CONNECT_CONSUMER_SASL_JAAS_CONFIG: 'software.amazon.msk.auth.iam.IAMLoginModule required username="darsh" password="darsh-secret";'
+      CONNECT_CONSUMER_SASL_MECHANISM: SCRAM-SHA-512
+      CONNECT_CONSUMER_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="darsh" password="darsh-secret";'
       CONNECT_PRODUCER_SECURITY_PROTOCOL: SASL_SSL
-      CONNECT_PRODUCER_SASL_MECHANISM: AWS_MSK_IAM
-      CONNECT_PRODUCER_SASL_JAAS_CONFIG: 'software.amazon.msk.auth.iam.IAMLoginModule required username="darsh" password="darsh-secret";'
+      CONNECT_PRODUCER_SASL_MECHANISM: SCRAM-SHA-512
+      CONNECT_PRODUCER_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="darsh" password="darsh-secret";'
 
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
       CONNECT_REST_PORT: 8083
