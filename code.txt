@@ -61,7 +61,7 @@ for showing connectors and its status
 ```
 curl -H "Accept:application/json" localhost:8083/connectors/
 
-curl localhost:8083/connectors/s3-connector/status
+s3-connector/status
 ```
 ##for showing logs of connections if err exist or not
 docker logs -f connect

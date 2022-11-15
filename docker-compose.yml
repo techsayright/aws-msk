@@ -50,7 +50,7 @@ services:
       CONNECT_REPLICATION_FACTOR: 3
       CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
       CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
-      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://localhost:8081
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
 
@@ -64,11 +64,11 @@ services:
       - "8088:8088"
     environment:
       KSQL_CONFIG_DIR: "/etc/ksql"
-      KSQL_BOOTSTRAP_SERVERS: "SASL_SSL://b-2.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-3.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-1.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096"
+      KSQL_BOOTSTRAP_SERVERS: "b-2.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,b-3.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096"
       KSQL_HOST_NAME: ksqldb-server
       KSQL_LISTENERS: "http://0.0.0.0:8088"
       KSQL_CACHE_MAX_BYTES_BUFFERING: 0
-      KSQL_KSQL_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+      KSQL_KSQL_SCHEMA_REGISTRY_URL: "http://localhost:8081"
       KSQL_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
       KSQL_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
       KSQL_KSQL_CONNECT_URL: "http://connect:8083"
@@ -95,13 +95,13 @@ services:
     command: "bash -c 'echo Waiting for Kafka to be ready... && \
       cub kafka-ready -b b-2.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,b-3.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096 1 40 && \
       echo Waiting for Confluent Schema Registry to be ready... && \
-      cub sr-ready schema-registry 8081 40 && \
+      cub sr-ready localhost 8081 40 && \
       echo Waiting a few seconds for topic creation to finish... && \
       sleep 11 && \
       tail -f /dev/null'"
     environment:
       KSQL_CONFIG_DIR: "/etc/ksql"
-      STREAMS_BOOTSTRAP_SERVERS: "SASL_SSL://b-2.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-3.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-1.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096"
+      STREAMS_BOOTSTRAP_SERVERS: "b-2.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,b-3.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096"
       STREAMS_SCHEMA_REGISTRY_HOST: schema-registry
       STREAMS_SCHEMA_REGISTRY_PORT: 8081
 
