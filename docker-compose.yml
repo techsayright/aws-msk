@@ -8,7 +8,7 @@ services:
       - "8081:8081"
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "SASL_SSL://b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
       SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: SASL_SSL
       SCHEMA_REGISTRY_KAFKASTORE_SASL_MECHANISM: SCRAM-SHA-512
       SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="darsh" password="darsh-secret";'
@@ -64,7 +64,7 @@ services:
       - "8088:8088"
     environment:
       KSQL_CONFIG_DIR: "/etc/ksql"
-      KSQL_BOOTSTRAP_SERVERS: "b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
+      KSQL_BOOTSTRAP_SERVERS: "SASL_SSL://b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
       KSQL_HOST_NAME: ksqldb-server
       KSQL_LISTENERS: "http://0.0.0.0:8088"
       KSQL_CACHE_MAX_BYTES_BUFFERING: 0
@@ -101,7 +101,7 @@ services:
       tail -f /dev/null'"
     environment:
       KSQL_CONFIG_DIR: "/etc/ksql"
-      STREAMS_BOOTSTRAP_SERVERS: "b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
+      STREAMS_BOOTSTRAP_SERVERS: "SASL_SSL://b-3.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-1.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-2.democluster2.09x7h6.c19.kafka.us-east-1.amazonaws.com:9096"
       STREAMS_SCHEMA_REGISTRY_HOST: schema-registry
       STREAMS_SCHEMA_REGISTRY_PORT: 8081
 
