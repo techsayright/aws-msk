@@ -58,9 +58,6 @@ services:
     build: ./client-image
     image: demo/debezium-flink-sql
     depends_on:
-      - broker0
-      - broker1
-      - broker2
       - jobmanager
     environment:
       FLINK_JOBMANAGER_HOST: jobmanager
