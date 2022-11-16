@@ -8,7 +8,7 @@ services:
       - "8081:8081"
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "SASL_SSL://b-2.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-3.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-1.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096"
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "SASL_SSL://b-3.democluster2.gm0vt6.c2.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-1.democluster2.gm0vt6.c2.kafka.us-east-1.amazonaws.com:9096,SASL_SSL://b-2.democluster2.gm0vt6.c2.kafka.us-east-1.amazonaws.com:9096"
       SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: SASL_SSL
       SCHEMA_REGISTRY_KAFKASTORE_SASL_MECHANISM: SCRAM-SHA-512
       SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="darsh" password="darsh-secret";'
@@ -26,7 +26,7 @@ services:
     ports:
       - "8083:8083"
     environment:
-      CONNECT_BOOTSTRAP_SERVERS: "b-2.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,b-3.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096"
+      CONNECT_BOOTSTRAP_SERVERS: "b-3.democluster2.gm0vt6.c2.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.gm0vt6.c2.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.gm0vt6.c2.kafka.us-east-1.amazonaws.com:9096"
       CONNECT_SECURITY_PROTOCOL: SASL_SSL
       CONNECT_SASL_MECHANISM: SCRAM-SHA-512
       CONNECT_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="darsh" password="darsh-secret";'
@@ -54,29 +54,39 @@ services:
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
 
-  sql-client:
-    build: ./client-image
-    image: demo/debezium-flink-sql
+  ksql-server:
+    image: confluentinc/cp-ksql-server:latest
+    hostname: ksql-server
+    container_name: ksql-server
     depends_on:
-      - jobmanager
-    environment:
-      FLINK_JOBMANAGER_HOST: jobmanager
-      ZOOKEEPER_CONNECT: zookeeper
-      KAFKA_BOOTSTRAP: "b-2.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,b-3.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.xuzmdj.c2.kafka.us-east-1.amazonaws.com:9096"
-  jobmanager:
-    image: flink:1.12.1-scala_2.11
+      - connect
     ports:
-      - "8082:8082"
-    command: jobmanager
+      - "8088:8088"
     environment:
-      - JOB_MANAGER_RPC_ADDRESS=jobmanager
-  taskmanager:
-    image: flink:1.12.1-scala_2.11
+      KSQL_CONFIG_DIR: "/etc/ksql"
+      KSQL_BOOTSTRAP_SERVERS: "b-3.democluster2.gm0vt6.c2.kafka.us-east-1.amazonaws.com:9096,b-1.democluster2.gm0vt6.c2.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.gm0vt6.c2.kafka.us-east-1.amazonaws.com:9096"
+      KSQL_HOST_NAME: ksql-server
+      KSQL_LISTENERS: "http://0.0.0.0:8088"
+      KSQL_CACHE_MAX_BYTES_BUFFERING: 0
+      KSQL_KSQL_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+      KSQL_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+      KSQL_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+      KSQL_KSQL_CONNECT_URL: "http://connect:8083"
+      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_REPLICATION_FACTOR: 3
+      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
+      KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: "true"
+      KSQL_SECURITY_PROTOCOL: SASL_SSL
+      KSQL_SASL_MECHANISM: SCRAM-SHA-512
+      KSQL_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="darsh" password="darsh-secret";'
+
+  ksql-cli:
+    image: confluentinc/cp-ksql-cli:latest
+    container_name: ksqldb-cli
     depends_on:
-      - jobmanager
-    command: taskmanager
-    environment:
-      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+      - connect
+      - ksql-server
+    entrypoint: /bin/sh
+    tty: true
 
   ##ALL SOURCES ADDED HERE
 
