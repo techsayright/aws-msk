@@ -81,7 +81,7 @@ services:
 
   ksql-cli:
     image: confluentinc/cp-ksql-cli:latest
-    container_name: ksqldb-cli
+    container_name: ksql-cli
     depends_on:
       - connect
       - ksql-server
