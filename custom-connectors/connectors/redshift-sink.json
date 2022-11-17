@@ -1,15 +1,15 @@
 {
   "name": "redshift-sink",
   "config": {
-    "confluent.topic.bootstrap.servers": "bootstrap_servers",
+    "confluent.topic.bootstrap.servers": "b-1.democluster2.ah9um3.c2.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.ah9um3.c2.kafka.us-east-1.amazonaws.com:9096,b-3.democluster2.ah9um3.c2.kafka.us-east-1.amazonaws.com:9096",
     "connector.class": "io.confluent.connect.aws.redshift.RedshiftSinkConnector",
     "tasks.max": "1",
-    "topics": "orders",
-    "aws.redshift.domain": "cluster-name.cluster-id.region.redshift.amazonaws.com",
+    "topics": "demo.class.courses",
+    "aws.redshift.domain": "redshift-cluster-1.c3et5yekaq9u.us-east-1.redshift.amazonaws.com",
     "aws.redshift.port": "5439",
     "aws.redshift.database": "dev",
-    "aws.redshift.user": "awsuser",
-    "aws.redshift.password": "your-password",
+    "aws.redshift.user": "darsh",
+    "aws.redshift.password": "darshPassword1",
     "auto.create": "true",
     "pk.mode": "kafka"
   }

@@ -13,6 +13,14 @@
     "tasks.max": "1",
     "plugin.name": "wal2json",
     "transforms": "mongoflatten",
+    "database.history.kafka.bootstrap.servers": "b-1.democluster2.ah9um3.c2.kafka.us-east-1.amazonaws.com:9096,b-2.democluster2.ah9um3.c2.kafka.us-east-1.amazonaws.com:9096,b-3.democluster2.ah9um3.c2.kafka.us-east-1.amazonaws.com:9096",
+    "database.history.kafka.topic": "dbhistory.dbo.orders",
+    "database.history.consumer.security.protocol": "SASL_SSL",
+    "database.history.consumer.sasl.mechanism": "SCRAM-SHA-512",
+    "database.history.consumer.sasl.jaas.config": "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"darsh\" password=\"darsh-secret\";",
+    "database.history.producer.security.protocol": "SASL_SSL",
+    "database.history.producer.sasl.mechanism": "SCRAM-SHA-512",
+    "database.history.producer.sasl.jaas.config": "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"darsh\" password=\"darsh-secret\";",
     "transforms.mongoflatten.type": "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState",
     "transforms.mongoflatten.drop.tombstones": false
   }
