@@ -198,8 +198,8 @@ docker exec -it mongo1 bash
 mongo
 
 use mydb
-db.colors.insert([
-{ _id : 1005, first_name : 'Bob', last_name : 'Hopper', email : 'thebob@example.com' }
+db.courses.insert([
+{course_id : 400, course_name : 'Hopper'}
 ]);
 
 db.colors.find().pretty()
